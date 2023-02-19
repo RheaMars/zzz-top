@@ -3,6 +3,9 @@ declare(strict_types = 1);
 
 namespace src;
 
+/**
+ * Adapted from https://pear.php.net/package/Math_Combinatorics.
+ */
 class Combinatorics
 {
     private array $pointers = [];
