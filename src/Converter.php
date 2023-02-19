@@ -46,16 +46,10 @@ class Converter
      * We bundle all paragraph segments containing a "z" to be able to find all possible combinations of
      * these ambiguous segments later.
      */
-    private function getSegmentsFromParagraphString(string $paragraphsAsString, bool $showLogs = false): array
+    private function getSegmentsFromParagraphString(string $paragraphsAsString): array
     {
         preg_match_all("/[a-y]|z+[a-y]|z+/", $paragraphsAsString, $matches);
         $paragraphSegments = $matches[0];
-
-        if ($showLogs) {
-            echo "<pre>";
-            echo "Paragraph segments: <br/>";
-            print_r($paragraphSegments);
-        }
 
         return $paragraphSegments;
     }
@@ -66,7 +60,7 @@ class Converter
      * E.g. for the paragraph segments ["a", "b", "ze", "z"] we retrieve the following ambiguous segments:
      * ["ze"].
      */
-    private function getAmbiguousSegments(array $paragraphSegments, bool $showLogs = false): array
+    private function getAmbiguousSegments(array $paragraphSegments): array
     {
         $ambiguousSegments = [];
         foreach ($paragraphSegments as $key => $segment) {
@@ -81,12 +75,6 @@ class Converter
             }
         }
 
-        if ($showLogs) {
-            echo "<pre>";
-            echo "Ambiguous segments: <br/>";
-            print_r($ambiguousSegments);
-        }
-
         return $ambiguousSegments;
     }
 
@@ -94,14 +82,10 @@ class Converter
      * Extract the article number the input strings starts with.
      * E.g. for the input "1234zabcc" the article number would be 1234.
      */
-    private function getArticleNumber(bool $showLogs = false): int
+    private function getArticleNumber(): int
     {
         $filteredNumbers = array_filter(preg_split("/\D+/", $this->originalInput));
         $articleNumber = reset($filteredNumbers);
-
-        if ($showLogs) {
-            echo "Article Number: " . $articleNumber . "<br/>";
-        }
 
         return (int)$articleNumber;
     }
@@ -110,14 +94,11 @@ class Converter
      * Extract the string of paragraphs from the original input.
      * E.g. for the input "123zabcc" the string of paragraphs would be "zabcc".
      */
-    private function getParagraphString(bool $showLogs = false): string
+    private function getParagraphString(): string
     {
         $articleNumber = $this->getArticleNumber(false);
         $paragraphString = substr($this->originalInput, strlen((string)$articleNumber));
 
-        if ($showLogs) {
-            echo "Paragraph-String: " . $paragraphString . "<br/>";
-        }
         return $paragraphString;
     }
 
@@ -125,7 +106,7 @@ class Converter
      * Identifies all indentation alternatives for all given ambiguous segments.
      * Note that the outmost keys of the result array are the keys we also have in the segments array.
      */
-    private function getCombinationsOfAmbiguousSegments(array $ambiguousSegments, bool $showLogs = false): array
+    private function getCombinationsOfAmbiguousSegments(array $ambiguousSegments): array
     {
         $combinationsOfAmbiguousSegments = [];
 
@@ -145,12 +126,6 @@ class Converter
             $combinationsOfAmbiguousSegments[$key] = $alternativeSegments;
         }
 
-        if ($showLogs) {
-            echo "<pre>";
-            echo "Combinations of ambiguous segments: <br/>";
-            var_dump($combinationsOfAmbiguousSegments);
-        }
-
         return $combinationsOfAmbiguousSegments;
     }
 
@@ -159,7 +134,7 @@ class Converter
      * E.g. for segment "zzc" with split positions [0] we will retrieve ["z", "zc"],
      * with split positions [0, 1] we wil retrieve ["z", "z", "c"].
      */
-    private function getAlternativeSegmentBySplitPositions(string $ambiguousSegmentString, array $splitPositions, bool $showLogs = false): array
+    private function getAlternativeSegmentBySplitPositions(string $ambiguousSegmentString, array $splitPositions): array
     {
         $resultString = $ambiguousSegmentString;
 
@@ -170,22 +145,14 @@ class Converter
             $increasePositionCounter += $increasePositionCounter;
         }
 
-        $alternativeSegments = explode(".", trim($resultString, "."));
-
-        if ($showLogs) {
-            echo "<pre>";
-            echo "Alternative segments for $resultString with split positions ". implode(", ", $splitPositions). ": <br/>";
-            var_dump($alternativeSegments);
-        }
-
-        return $alternativeSegments;
+        return explode(".", trim($resultString, "."));
     }
 
     /**
      * Identifies all possible indentations (or splits) for the given segment as combinations of split positions.
      * E.g. for segment "zzc" we have the split positions 0, 1 and (0 and 1) which will lead to "z.zc", "zz.c" and "z.z.c".
      */
-    private function getSplitPositionsForSegment(array $ambiguousSegment, bool $showLogs = false): array
+    private function getSplitPositionsForSegment(array $ambiguousSegment): array
     {
         $combinatorics = new Combinatorics();
 
@@ -204,19 +171,13 @@ class Converter
             }
         }
 
-        if ($showLogs) {
-            echo "<pre>";
-            echo "Split positions for ambiguous segment " . implode(", ", $ambiguousSegment) . ":<br/>";
-            var_dump($splitPositionsForSegment);
-        }
-
         return $splitPositionsForSegment;
     }
 
     /**
      * Gathers aöternatives of unambiguous and ambiguous segments in a single array.
      */
-    private function getParagraphSegmentAlternatives(array $paragraphSegments, array $combinationsOfAmbiguousSegments, bool $showLogs = false): array
+    private function getParagraphSegmentAlternatives(array $paragraphSegments, array $combinationsOfAmbiguousSegments): array
     {
         $paragraphSegmentAlternatives = [];
 
@@ -229,26 +190,14 @@ class Converter
             }
         }
 
-        if ($showLogs) {
-            echo "<pre>";
-            echo "Paragraph segment alternatives:<br/>";
-            var_dump($paragraphSegmentAlternatives);
-        }
-
         return $paragraphSegmentAlternatives;
     }
 
-    private function getIndentationAlternatives(int $articleNumber, array $paragraphSegmentAlternatives, bool $showLogs = false): array
+    private function getIndentationAlternatives(int $articleNumber, array $paragraphSegmentAlternatives): array
     {
         $alternatives = [[$articleNumber]];
         foreach ($paragraphSegmentAlternatives as $alternative) {
             $alternatives = $this->getCartesianProduct($alternatives, $alternative);
-        }
-
-        if ($showLogs) {
-            echo "<pre>";
-            echo "All indentation alternatives:<br/>";
-            var_dump($alternatives);
         }
 
         return $alternatives;
