@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace src;
 
-class Calculator
+class Converter
 {
     private string $originalInput;
 

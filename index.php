@@ -16,18 +16,18 @@
 </form>
 
 <?php
-include "src/Calculator.php";
+include "src/Converter.php";
 include "src/Combinatorics.php";
 
-use src\Calculator;
+use src\Converter;
 
 if(isset($_POST['originalInput'])) {
 
     $originalInput = $_POST['originalInput'];
 
-    $calculator = new Calculator($originalInput);
+    $converter = new Converter($originalInput);
 
-    if (!$calculator->isInputValid($originalInput)) {
+    if (!$converter->isInputValid($originalInput)) {
         $htmlOutput = "<p class='warning'>Input is invalid: It must start with a positive number, followed by lower case characters, for example \"12abzaazx\".</p>";
     }
     else {
@@ -40,7 +40,7 @@ if(isset($_POST['originalInput'])) {
              <th>greek</th>
             </tr>";
 
-        foreach ($calculator->computeOutput() as $outputEntry) {
+        foreach ($converter->computeOutput() as $outputEntry) {
             $htmlOutput .= "<tr>";
             $htmlOutput .= "<td>" . $outputEntry["lexicographic"] . "</td>";
             $htmlOutput .= "<td>" . $outputEntry["arabic"] . "</td>";
