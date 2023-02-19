@@ -35,13 +35,15 @@ if(isset($_POST['originalInput'])) {
         $htmlOutput .= "
             <table>
             <tr>
+             <th>#</th>
              <th>lexicographic</th>
              <th>arabic</th>
              <th>greek</th>
             </tr>";
 
-        foreach ($converter->computeOutput() as $outputEntry) {
+        foreach ($converter->computeOutput() as $key => $outputEntry) {
             $htmlOutput .= "<tr>";
+            $htmlOutput .= "<td>" . ($key + 1) . "</td>";
             $htmlOutput .= "<td>" . $outputEntry["lexicographic"] . "</td>";
             $htmlOutput .= "<td>" . $outputEntry["arabic"] . "</td>";
             $htmlOutput .= "<td>" . $outputEntry["greek"] . "</td>";
