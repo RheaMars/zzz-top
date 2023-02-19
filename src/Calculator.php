@@ -37,7 +37,7 @@ class Calculator
      */
     public function isInputValid(string $input): bool
     {
-        return preg_match('/^\d+[a-z]*$/', $input) === 1;
+        return preg_match('/^[1-9]\d*[a-z]*$/', $input) === 1;
     }
 
     /**
