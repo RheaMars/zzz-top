@@ -282,7 +282,7 @@ class Calculator
             $output[] = [
                 "lexicographic" => implode(".", $alternative),
                 "arabic" => implode(".", $arabicAlternative),
-                "greek" => "test2"
+                "greek" => "not yet implemented"
             ];
         }
 

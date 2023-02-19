@@ -7,41 +7,52 @@
 </head>
 <body>
 
+<h1>EU Indentation Converter</h1>
+
+<form method="POST" action="index.php">
+    <label for="originalInput">Enter a value:</label><br/><br/>
+    <input type="text" id="originalInput" name="originalInput" value="<?php echo isset($_POST['originalInput']) ? $_POST['originalInput'] : '' ?>"><br/><br/>
+    <input type="submit" value="Submit">
+</form>
+
 <?php
 include "src/Calculator.php";
 include "src/Combinatorics.php";
 
 use src\Calculator;
 
-$originalInput = "1234abcze";
+if(isset($_POST['originalInput'])) {
 
-$calculator = new Calculator($originalInput);
+    $originalInput = $_POST['originalInput'];
 
-if (!$calculator->isInputValid($originalInput)) {
-    echo "Input is invalid: It must start with a positive number, followed by lowercase chars, eg. 12abzaazx.";
-    exit;
+    $calculator = new Calculator($originalInput);
+
+    if (!$calculator->isInputValid($originalInput)) {
+        $htmlOutput = "<p class='warning'>Input is invalid: It must start with a positive number, followed by lower case characters, for example \"12abzaazx\".</p>";
+    }
+    else {
+        $htmlOutput = '<h2>Indentation alternatives for "' . $originalInput . '":</h2>';
+        $htmlOutput .= "
+            <table>
+            <tr>
+             <th>lexicographic</th>
+             <th>arabic</th>
+             <th>greek</th>
+            </tr>";
+
+        foreach ($calculator->computeOutput() as $outputEntry) {
+            $htmlOutput .= "<tr>";
+            $htmlOutput .= "<td>" . $outputEntry["lexicographic"] . "</td>";
+            $htmlOutput .= "<td>" . $outputEntry["arabic"] . "</td>";
+            $htmlOutput .= "<td>" . $outputEntry["greek"] . "</td>";
+            $htmlOutput .= "</tr>";
+        }
+
+        $htmlOutput .= "</table>";
+    }
+
+    echo $htmlOutput;
 }
-
-echo '<h2>Indentation alternatives for "' . $originalInput . '":</h2>';
-
-$table = "
-<table>
-<tr>
- <th>lexicographic</th>
- <th>arabic</th>
- <th>greek</th>
-</tr>";
-
-foreach ($calculator->computeOutput() as $outputEntry) {
-    $table .= "<tr>";
-    $table .= "<td>" . $outputEntry["lexicographic"] . "</td>";
-    $table .= "<td>" . $outputEntry["arabic"] . "</td>";
-    $table .= "<td>" . $outputEntry["greek"] . "</td>";
-    $table .= "</tr>";
-}
-
-$table .= "</table>";
-echo $table;
 ?>
 
 </body>
