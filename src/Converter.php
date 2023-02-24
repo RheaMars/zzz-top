@@ -332,8 +332,6 @@ class Converter
         return $arabicAlternative;
     }
 
-// was passiert mit 12zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzza?
-
     private function getGreekConversion(array $arabicAlternative): array
     {
         $greekAlternative = [];
@@ -373,9 +371,7 @@ class Converter
             }
             
             $greekAlternative[] = $greekAlternativeSegment;
-            
-            $segmentCounter++;
-            
+                        
         }
         return $greekAlternative;
     }
