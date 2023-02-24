@@ -11,7 +11,7 @@ class Converter
 
     private const AMBIGUOUS_LETTER = "z";
 
-    private const GREEK_MAX_NUMBER = 999999;
+    private const GREEK_MAX_EXPONENT = 6;
 
     private const GREEK_MAPPING = [
         1 => 'α',
@@ -347,8 +347,9 @@ class Converter
                 continue;
             }
 
-            if ($segmentCounter > 1 && $arabicAlternativeSegment > self::GREEK_MAX_NUMBER) {
-                throw new Exception("not supported (segment $arabicAlternativeSegment is higher than " . self::GREEK_MAX_NUMBER . ").");
+            $greekMaxNumber = pow(10, self::GREEK_MAX_EXPONENT) - 1;
+            if ($segmentCounter > 1 && $arabicAlternativeSegment > $greekMaxNumber) {
+                throw new Exception("not supported (segment $arabicAlternativeSegment is higher than $greekMaxNumber).");
             }
 
             $numbersToMap = [];
