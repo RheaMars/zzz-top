@@ -3,11 +3,11 @@
 <head>
     <link href="css/font.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/styles.css">
-    <title>EU Indentation Converter</title>
+    <title>ZZZ Top</title>
 </head>
 <body>
 
-<h1>EU Indentation Converter</h1>
+<h1>ZZZ Top</h1>
 
 <form method="POST" action="index.php">
     <label for="originalInput">Enter a value:</label><br/><br/>

@@ -3,11 +3,15 @@ declare(strict_types = 1);
 
 namespace src;
 
+use Exception;
+
 class Converter
 {
     private string $originalInput;
 
     private const AMBIGUOUS_LETTER = "z";
+
+    private const GREEK_MAX_NUMBER = 999999;
 
     private const GREEK_MAPPING = [
         1 => 'α',
@@ -285,10 +289,18 @@ class Converter
 
             $arabicAlternative = $this->getArabicConversion($alternative);
 
+            try {
+                $greekAlternative = $this->getGreekConversion($arabicAlternative);
+            }
+            catch (Exception $e) {
+                $greekAlternative = [$e->getMessage()];
+            }
+
+
             $output[] = [
                 "lexicographic" => implode(".", $alternative),
                 "arabic" => implode(".", $arabicAlternative),
-                "greek" => "not yet implemented"
+                "greek" => implode(".", $greekAlternative)
             ];
         }
 
@@ -318,5 +330,53 @@ class Converter
             }
         }
         return $arabicAlternative;
+    }
+
+// was passiert mit 12zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzza?
+
+    private function getGreekConversion(array $arabicAlternative): array
+    {
+        $greekAlternative = [];
+
+        $segmentCounter = 0;
+        foreach ($arabicAlternative as $arabicAlternativeSegment) {
+            $segmentCounter++;
+
+            $greekAlternativeSegment = '';
+
+            if ($segmentCounter === 1) {
+                $greekAlternative[] = $arabicAlternativeSegment;
+                continue;
+            }
+
+            if ($segmentCounter > 1 && $arabicAlternativeSegment > self::GREEK_MAX_NUMBER) {
+                throw new Exception("not supported (segment $arabicAlternativeSegment is higher than " . self::GREEK_MAX_NUMBER . ").");
+            }
+
+            $numbersToMap = [];
+            
+            $currentRemainder = $arabicAlternativeSegment;
+            for ($exponent = 5; $exponent >= 0; $exponent--) {
+                $quotient = (int)($currentRemainder / pow(10, $exponent));
+                $remainder = $currentRemainder % pow(10, $exponent);
+
+                $numbersToMap[] = $quotient * pow(10, $exponent);
+                $currentRemainder = $remainder;
+            }
+
+            $greekAlternativeSegment = '';
+            foreach ($numbersToMap as $numberToMap) {
+                if (0 === $numberToMap) {
+                    continue;
+                }
+                $greekAlternativeSegment .= self::GREEK_MAPPING[$numberToMap];
+            }
+            
+            $greekAlternative[] = $greekAlternativeSegment;
+            
+            $segmentCounter++;
+            
+        }
+        return $greekAlternative;
     }
 }
