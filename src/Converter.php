@@ -355,7 +355,7 @@ class Converter
             $numbersToMap = [];
             
             $currentRemainder = $arabicAlternativeSegment;
-            for ($exponent = 5; $exponent >= 0; $exponent--) {
+            for ($exponent = (self::GREEK_MAX_EXPONENT - 1); $exponent >= 0; $exponent--) {
                 $quotient = (int)($currentRemainder / pow(10, $exponent));
                 $remainder = $currentRemainder % pow(10, $exponent);
 
