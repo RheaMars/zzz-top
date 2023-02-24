@@ -110,9 +110,7 @@ class Converter
     private function getSegmentsFromParagraphString(string $paragraphsAsString): array
     {
         preg_match_all("/[a-y]|z+[a-y]|z+/", $paragraphsAsString, $matches);
-        $paragraphSegments = $matches[0];
-
-        return $paragraphSegments;
+        return $matches[0];
     }
 
     /**
@@ -158,9 +156,7 @@ class Converter
     private function getParagraphString(): string
     {
         $articleNumber = $this->getArticleNumber(false);
-        $paragraphString = substr($this->originalInput, strlen((string)$articleNumber));
-
-        return $paragraphString;
+        return substr($this->originalInput, strlen((string)$articleNumber));
     }
 
     /**
@@ -236,7 +232,7 @@ class Converter
     }
 
     /**
-     * Gathers aöternatives of unambiguous and ambiguous segments in a single array.
+     * Gathers alternatives of unambiguous and ambiguous segments in a single array.
      */
     private function getParagraphSegmentAlternatives(array $paragraphSegments, array $combinationsOfAmbiguousSegments): array
     {
