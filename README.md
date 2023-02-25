@@ -43,7 +43,7 @@ This piece of software accepts strings that consist of a positive integer head a
 
 The output of the string above would be
 ```
-![Output for input `12zzztop`](./12zzztop.png)
+![Output for input `12zzztop`](12zzztop.png)
 ```
 
 ## Minimal running setup <a name="minimal-running-setup"></a>
