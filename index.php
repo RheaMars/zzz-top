@@ -33,7 +33,8 @@ if(isset($_POST['originalInput'])) {
         $htmlOutput = "<p class='warning'>Input is invalid: It must start with a positive number, followed by lower case characters, for example \"12abzaazx\".</p>";
     }
     else {
-        $htmlOutput = '<h2>Indentation alternatives for "' . $originalInput . '":</h2>';
+        $disambiguatedData = $service->getData($originalInput);
+        $htmlOutput = '<h2>Value "' . $originalInput . '" disambiguates in ' . count($disambiguatedData) . ' ways:</h2>';
         $htmlOutput .= "
             <table>
             <tr>
@@ -43,7 +44,7 @@ if(isset($_POST['originalInput'])) {
              <th>greek</th>
             </tr>";
 
-        foreach ($service->getData($originalInput) as $key => $outputEntry) {
+        foreach ($disambiguatedData as $key => $outputEntry) {
 
             $htmlOutput .= "<tr>";
             $htmlOutput .= "<td>" . ($key + 1) . "</td>";
