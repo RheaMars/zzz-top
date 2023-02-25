@@ -340,8 +340,6 @@ class Converter
         foreach ($arabicAlternative as $arabicAlternativeSegment) {
             $segmentCounter++;
 
-            $greekAlternativeSegment = '';
-
             if ($segmentCounter === 1) {
                 $greekAlternative[] = $arabicAlternativeSegment;
                 continue;
@@ -352,28 +350,50 @@ class Converter
                 throw new Exception("not supported (segment $arabicAlternativeSegment is higher than $greekMaxNumber).");
             }
 
-            $numbersToMap = [];
-            
-            $currentRemainder = $arabicAlternativeSegment;
-            for ($exponent = (self::GREEK_MAX_EXPONENT - 1); $exponent >= 0; $exponent--) {
-                $quotient = (int)($currentRemainder / pow(10, $exponent));
-                $remainder = $currentRemainder % pow(10, $exponent);
+            $greekAlternativeSegmentNumbers = $this->getPowerOfTenSummands($arabicAlternativeSegment);
 
-                $numbersToMap[] = $quotient * pow(10, $exponent);
-                $currentRemainder = $remainder;
-            }
-
-            $greekAlternativeSegment = '';
-            foreach ($numbersToMap as $numberToMap) {
-                if (0 === $numberToMap) {
-                    continue;
-                }
-                $greekAlternativeSegment .= self::GREEK_MAPPING[$numberToMap];
-            }
+            $greekAlternativeSegment = $this->mapIntegersByConversionArray($greekAlternativeSegmentNumbers, self::GREEK_MAPPING);
             
             $greekAlternative[] = $greekAlternativeSegment;
                         
         }
         return $greekAlternative;
+    }
+
+    /**
+     * Returns the decimal representation summands of an integer as an array of integers.
+     * E.g., for the $number 154, the function returns [100, 50, 4].
+     */
+    private function getPowerOfTenSummands(int $number): array
+    {
+        $numbersToMap = [];
+            
+        $currentRemainder = $number;
+        for ($exponent = (self::GREEK_MAX_EXPONENT - 1); $exponent >= 0; $exponent--) {
+            $quotient = (int)($currentRemainder / pow(10, $exponent));
+            $remainder = $currentRemainder % pow(10, $exponent);
+
+            $numbersToMap[] = $quotient * pow(10, $exponent);
+            $currentRemainder = $remainder;
+        }
+        return $numbersToMap;
+    }
+
+    /**
+     * Converts each integer of an array based on an associative array that specifies the conversion.
+     * E.g., if $numbers is [1, 2, 3] and the $conversionArray is [1=>'hallo', 2=>'world', 3=>'!...'],
+     * then the function returns ['hallo', 'world', '!...'].
+     */
+    private function mapIntegersByConversionArray(array $numbers, array $conversionArray): string
+    {
+        $greekAlternativeSegment = '';
+        foreach ($numbers as $number) {
+            if (0 === $number) {
+                continue;
+            }
+            $greekAlternativeSegment .= $conversionArray[$number];
+        }
+
+        return $greekAlternativeSegment;
     }
 }
