@@ -99,21 +99,19 @@ class Converter
     {
         $greekAlternative = [];
 
-        $segmentCounter = 0;
-        foreach ($arabicAlternative as $arabicAlternativeSegment) {
-            $segmentCounter++;
+        $headSegment = $arabicAlternative[0];
+        $tailSegments = array_slice($arabicAlternative, 1);
 
-            if ($segmentCounter === 1) {
-                $greekAlternative[] = $arabicAlternativeSegment;
-                continue;
-            }
+        $greekAlternative[] = $headSegment;
+
+        foreach ($tailSegments as $tailSegment) {
 
             $greekMaxNumber = pow(10, self::GREEK_MAX_EXPONENT) - 1;
-            if ($segmentCounter > 1 && $arabicAlternativeSegment > $greekMaxNumber) {
-                throw new Exception("not supported (segment $arabicAlternativeSegment is higher than $greekMaxNumber).");
+            if ($tailSegment > $greekMaxNumber) {
+                throw new Exception("not supported (segment $tailSegment is higher than $greekMaxNumber).");
             }
 
-            $greekAlternativeSegmentNumbers = $this->getPowerOfTenSummands($arabicAlternativeSegment);
+            $greekAlternativeSegmentNumbers = $this->getPowerOfTenSummands($tailSegment);
 
             $greekAlternativeSegment = $this->mapIntegersByConversionArray($greekAlternativeSegmentNumbers, self::GREEK_MAPPING);
             
