@@ -62,5 +62,3 @@ The output of the string above would be
 ### Tests <a name="tests"></a>
 
 - Run the tests by `./vendor/bin/phpunit tests`.
-
-(Disambiguate a string that starts with an integer and possibly continues with latin characters, based on a specified-as-ambiguous character.)
