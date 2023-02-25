@@ -16,18 +16,20 @@
 </form>
 
 <?php
+include "src/DataProviderService.php";
+include "src/Disambiguator.php";
 include "src/Converter.php";
 include "src/Combinatorics.php";
 
-use src\Converter;
+use src\DataProviderService;
 
 if(isset($_POST['originalInput'])) {
 
     $originalInput = $_POST['originalInput'];
 
-    $converter = new Converter($originalInput);
+    $service = new DataProviderService();
 
-    if (!$converter->isInputValid($originalInput)) {
+    if (!$service->isInputValid($originalInput)) {
         $htmlOutput = "<p class='warning'>Input is invalid: It must start with a positive number, followed by lower case characters, for example \"12abzaazx\".</p>";
     }
     else {
@@ -41,7 +43,8 @@ if(isset($_POST['originalInput'])) {
              <th>greek</th>
             </tr>";
 
-        foreach ($converter->computeOutput() as $key => $outputEntry) {
+        foreach ($service->getData($originalInput) as $key => $outputEntry) {
+
             $htmlOutput .= "<tr>";
             $htmlOutput .= "<td>" . ($key + 1) . "</td>";
             $htmlOutput .= "<td>" . $outputEntry["lexicographic"] . "</td>";
