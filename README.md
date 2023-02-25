@@ -1,10 +1,10 @@
 # Twelve ZZZ Top
 
 - [Here's a thought experiment](#Here)
-- [What this app does](#What this app does)
-- [Minimal running setup](#Minimal running setup)
+- [What this app does](#What)
+- [Minimal running setup](#Minimal)
   - [Prerequisites](#Prerequisites)
-  - [Run the app locally](#Run the app locally)
+  - [Run the app locally](#Run)
   - [Tests](#Tests)
 
 ## Here's a thought experiment
