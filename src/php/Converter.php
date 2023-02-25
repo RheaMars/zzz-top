@@ -5,7 +5,7 @@ namespace src\php;
 
 use Exception;
 
-class Converter
+final class Converter
 {
     private const GREEK_MAX_EXPONENT = 6;
 
