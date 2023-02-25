@@ -39,7 +39,7 @@ Excuse the authors of this app for busying themselves with such an arcane though
 
 ## What this app does <a name="what-this-app-does"></a>
 
-This piece of software accepts strings that consist of a positive integer head and a tail of latin characters, and no other symbols or spaces; for example, `12zzztop`. It returns all possible nestings that the string may suggest, considering the _ambiguity_ of the character `z`: when it is followed by a character it could mean both an increment and an indentation. The nestings are returned into their lexicographic form, as well as in their arabic and greek numeral representation.
+This piece of software accepts strings that consist of a positive integer head and a tail of latin characters, and no other symbols or spaces; for example, `12zzztop`. It returns all possible nestings that the string may suggest, considering the _ambiguity_ of the character `z`: when it is followed by a character it could mean both an increment and an indentation. The nestings are returned into their lexicographic form, as well as in its arabic and greek numeral representation.
 
 The output of the string above would be
 ```
