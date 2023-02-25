@@ -3,11 +3,11 @@
 <head>
     <link href="css/font.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/styles.css">
-    <title>EU Indentation Converter</title>
+    <title>ZZZ Top</title>
 </head>
 <body>
 
-<h1>EU Indentation Converter</h1>
+<h1>ZZZ Top</h1>
 
 <form method="POST" action="index.php">
     <label for="originalInput">Enter a value:</label><br/><br/>
@@ -16,22 +16,25 @@
 </form>
 
 <?php
+include "src/DataProviderService.php";
+include "src/Disambiguator.php";
 include "src/Converter.php";
 include "src/Combinatorics.php";
 
-use src\Converter;
+use src\DataProviderService;
 
 if(isset($_POST['originalInput'])) {
 
     $originalInput = $_POST['originalInput'];
 
-    $converter = new Converter($originalInput);
+    $service = new DataProviderService();
 
-    if (!$converter->isInputValid($originalInput)) {
+    if (!$service->isInputValid($originalInput)) {
         $htmlOutput = "<p class='warning'>Input is invalid: It must start with a positive number, followed by lower case characters, for example \"12abzaazx\".</p>";
     }
     else {
-        $htmlOutput = '<h2>Indentation alternatives for "' . $originalInput . '":</h2>';
+        $disambiguatedData = $service->getData($originalInput);
+        $htmlOutput = '<h2>Value "' . $originalInput . '" disambiguates in ' . count($disambiguatedData) . ' ways:</h2>';
         $htmlOutput .= "
             <table>
             <tr>
@@ -41,7 +44,8 @@ if(isset($_POST['originalInput'])) {
              <th>greek</th>
             </tr>";
 
-        foreach ($converter->computeOutput() as $key => $outputEntry) {
+        foreach ($disambiguatedData as $key => $outputEntry) {
+
             $htmlOutput .= "<tr>";
             $htmlOutput .= "<td>" . ($key + 1) . "</td>";
             $htmlOutput .= "<td>" . $outputEntry["lexicographic"] . "</td>";
