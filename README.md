@@ -1,13 +1,13 @@
 # Twelve ZZZ Top
 
-- [Here's a thought experiment](#Here)
-- [What this app does](#What)
-- [Minimal running setup](#Minimal)
-  - [Prerequisites](#Prerequisites)
-  - [Run the app locally](#Run)
-  - [Tests](#Tests)
+- [Here's a thought experiment](#here-s-a-thought-experiment)
+- [What this app does](#what-this-app-does)
+- [Minimal running setup](#minimal-running-setup)
+  - [Prerequisites](#prerequisites)
+  - [Run the app locally](#run-the-app-locally)
+  - [Tests](#tests)
 
-## Here's a thought experiment
+## Here's a thought experiment <a name="here-s-athought-experiment"></a>
 
 We're in the middle of World War I. To get his mind off things, Leonhardt Wittgenstein, a hardcore pythagorean arithmologist, sets out to solve all solvable problems in bureaucracy once and for all by employing a mere total of 121.023 propositions.
 
@@ -37,7 +37,7 @@ Now, wouldn't this explain why Wittgenstein's _Tractatus_ is hailed as one of th
 
 Excuse the authors of this app for busying themselves with such an arcane thought experiment. Certainly, in our very advanced, very digital, very practical age of clarity, no such conundrums are really possible.
 
-## What this app does
+## What this app does <a name="what-this-app-does"></a>
 
 This piece of software accepts strings that consist of a positive integer head and a tail of latin characters, and no other symbols or spaces; for example, `12zzztop`. It returns all possible nestings that the string may suggest, considering the _ambiguity_ of the character `z`: when it is followed by a character it could mean both an increment and an indentation. The nestings are returned into their lexicographic form, as well as in their arabic and greek numeral representation.
 
@@ -46,21 +46,21 @@ The output of the string above would be
 ![Output for input `12zzztop`](12zzztop.png "sample output")
 ```
 
-## Minimal running setup
+## Minimal running setup <a name="minimal-running-setup"></a>
 
-### Prerequisites
+### Prerequisites <a name="prerequisites"></a>
 - [php 8](https://www.php.net/manual/en/install.php)
 - [composer](https://getcomposer.org/download/)
 - php-xml: `sudo apt install php-xml`
 - phpunit: `sudo apt install phpunit`
 
-### Run the app locally
+### Run the app locally <a name="run-the-app-locally"></a>
 
 - Run `composer install` to install project dependencies.
 - Run `php -S 127.0.0.1:8000` to start the local php server.
 - Open the browser at http://127.0.0.1:8000/index.php.
 
-### Tests
+### Tests <a name="tests"></a>
 
 - Run the tests by `./vendor/bin/phpunit tests`.
 
