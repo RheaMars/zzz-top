@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace src\php;
 
-class Disambiguator
+final class Disambiguator
 {
     private const AMBIGUOUS_LETTER = "z";
 

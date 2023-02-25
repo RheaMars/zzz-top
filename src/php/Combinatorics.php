@@ -6,7 +6,7 @@ namespace src\php;
 /**
  * Adapted from https://pear.php.net/package/Math_Combinatorics.
  */
-class Combinatorics
+final class Combinatorics
 {
     private array $pointers = [];
 

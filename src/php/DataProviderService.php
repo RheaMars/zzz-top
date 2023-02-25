@@ -5,7 +5,7 @@ namespace src\php;
 
 use Exception;
 
-class DataProviderService
+final class DataProviderService
 {
     public function getData(string $originalInput): array
     {
