@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace src;
+namespace src\php;
 
 /**
  * Adapted from https://pear.php.net/package/Math_Combinatorics.

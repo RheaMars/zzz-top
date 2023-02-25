@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link href="css/font.css" rel="stylesheet">
-    <link rel="stylesheet" href="/css/styles.css">
+    <link href="src/css/font.css" rel="stylesheet">
+    <link rel="stylesheet" href="/src/css/styles.css">
     <title>ZZZ Top</title>
 </head>
 <body>
@@ -16,12 +16,9 @@
 </form>
 
 <?php
-include "src/DataProviderService.php";
-include "src/Disambiguator.php";
-include "src/Converter.php";
-include "src/Combinatorics.php";
+require 'vendor/autoload.php';
 
-use src\DataProviderService;
+use src\php\DataProviderService;
 
 if(isset($_POST['originalInput'])) {
 
