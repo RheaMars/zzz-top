@@ -7,7 +7,7 @@ use Exception;
 
 final class Converter
 {
-    private const GREEK_MAX_EXPONENT = 6;
+    public const GREEK_MAX_EXPONENT = 6;
 
     private const GREEK_MAPPING = [
         1 => 'α',
