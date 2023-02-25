@@ -1,6 +1,6 @@
 # Twelve ZZZ Top
 
-- [Here's a thought experiment](#Here's a thought experiment)
+- [Here's a thought experiment](#Here)
 - [What this app does](#What this app does)
 - [Minimal running setup](#Minimal running setup)
   - [Prerequisites](#Prerequisites)
