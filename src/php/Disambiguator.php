@@ -146,7 +146,10 @@ final class Disambiguator
         for ($i = 0; $i <= sizeof($keyIndexRange); $i++) {
             $splitPositions = $combinatorics->combinations($keyIndexRange, $i);
 
-            foreach ($splitPositions as $splitPosition) {
+            // reverse split positions to obtain on top the alternatives caused by the rightmost ambiguous "z"
+            $reversedSplitPositions = array_reverse($splitPositions);
+
+            foreach ($reversedSplitPositions as $splitPosition) {
                 $splitPositionsForSegment[] = $splitPosition;
             }
         }

@@ -2,19 +2,19 @@
 declare(strict_types=1);
 
 use PHPUnit\Framework\TestCase;
-use src\php\DataProviderService;
+use src\php\DataProvider;
 
 /**
- * @covers \src\php\DataProviderService
+ * @covers \src\php\DataProvider
  */
-final class DataProviderServiceTest extends TestCase
+final class DataProviderTest extends TestCase
 {
     /**
      * @dataProvider provideValidAmbiguousStringData
      */
     public function testGetData(string $ambiguousString, array $expectedData): void
     {
-        $service = new DataProviderService();
+        $service = new DataProvider();
 
         $this->assertSame($expectedData, $service->getData($ambiguousString));
     }
@@ -65,7 +65,7 @@ final class DataProviderServiceTest extends TestCase
      */
     public function testIsInputValid(string $ambiguousString, bool $expectedResult): void
     {
-        $service = new DataProviderService();
+        $service = new DataProvider();
 
         if (true === $expectedResult) {
             $this->assertTrue($service->isInputValid($ambiguousString));
@@ -73,7 +73,6 @@ final class DataProviderServiceTest extends TestCase
         else {
             $this->assertFalse($service->isInputValid($ambiguousString));
         }
-
     }
 
     public function provideValidAndInvalidAmbiguousStringData(): array

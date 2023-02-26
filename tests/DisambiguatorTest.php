@@ -47,7 +47,7 @@ final class DisambiguatorTest extends TestCase
             ],
             [
                 '123zza',
-                [[123, 'zza'], [123, 'z', 'za'], [123, 'zz', 'a'], [123, 'z', 'z', 'a']],
+                [[123, 'zza'], [123, 'zz', 'a'], [123, 'z', 'za'], [123, 'z', 'z', 'a']],
             ],
             [
                 '123abz',

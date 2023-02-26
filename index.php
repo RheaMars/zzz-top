@@ -1,3 +1,15 @@
+<?php
+require 'vendor/autoload.php';
+
+use src\php\ResultPrinter;
+
+$formWasSubmitted = $_SERVER['REQUEST_METHOD'] === 'POST';
+$ambiguousString = $_POST['ambiguousString'] ?? '';
+$setShowOptionsLimit = $_POST['setShowOptionsLimit'] ?? "true";
+$checkedValueForSetLimitToShownOptions = !isset($_POST['setShowOptionsLimit']) || "true" === $_POST['setShowOptionsLimit'] ? 'checked' : '';
+$checkedValueForSetNoLimitToShownOptions = isset($_POST['setShowOptionsLimit']) && "false" === $_POST['setShowOptionsLimit'] ? 'checked' : '';
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,51 +22,23 @@
 <h1>ZZZ Top</h1>
 
 <form method="POST" action="index.php">
-    <label for="ambiguousString">Enter a value:</label><br/><br/>
-    <input type="text" id="ambiguousString" name="ambiguousString" value="<?php echo isset($_POST['ambiguousString']) ? $_POST['ambiguousString'] : '' ?>"><br/><br/>
+    <p>
+        <label for="ambiguousString">Enter a value:</label><br/><br/>
+        <input type="text" id="ambiguousString" name="ambiguousString" value="<?php echo $ambiguousString ?>">
+    </p>
+    <p>
+        <input type="radio" id="setLimitToShownOptions" name="setShowOptionsLimit" value="true" <?php echo $checkedValueForSetLimitToShownOptions ?>>
+        <label for="setLimitToShownOptions">Show first two options</label><br/>
+        <input type="radio" id="setNoLimitToShownOptions" name="setShowOptionsLimit" value="false" <?php echo $checkedValueForSetNoLimitToShownOptions?>>
+        <label for="setNoLimitToShownOptions">Show all options</label>
+    </p>
     <input type="submit" value="Submit">
 </form>
 
 <?php
-require 'vendor/autoload.php';
-
-use src\php\DataProviderService;
-
-if(isset($_POST['ambiguousString'])) {
-
-    $ambiguousString = $_POST['ambiguousString'];
-
-    $service = new DataProviderService();
-
-    if (!$service->isInputValid($ambiguousString)) {
-        $htmlOutput = "<p class='warning'>Input is invalid: It must start with a positive number, followed by lower case characters, for example \"12abzaazx\".</p>";
-    }
-    else {
-        $disambiguatedData = $service->getData($ambiguousString);
-        $htmlOutput = '<h2>Value "' . $ambiguousString . '" disambiguates in ' . count($disambiguatedData) . ' ways:</h2>';
-        $htmlOutput .= "
-            <table>
-            <tr>
-             <th>#</th>
-             <th>lexicographic</th>
-             <th>arabic</th>
-             <th>greek</th>
-            </tr>";
-
-        foreach ($disambiguatedData as $key => $outputEntry) {
-
-            $htmlOutput .= "<tr>";
-            $htmlOutput .= "<td>" . ($key + 1) . "</td>";
-            $htmlOutput .= "<td>" . $outputEntry["lexicographic"] . "</td>";
-            $htmlOutput .= "<td>" . $outputEntry["arabic"] . "</td>";
-            $htmlOutput .= "<td>" . $outputEntry["greek"] . "</td>";
-            $htmlOutput .= "</tr>";
-        }
-
-        $htmlOutput .= "</table>";
-    }
-
-    echo $htmlOutput;
+if ($formWasSubmitted) {
+    $resultPrinter = new ResultPrinter();
+    echo $resultPrinter->printResult($ambiguousString, "true" === $setShowOptionsLimit);
 }
 ?>
 

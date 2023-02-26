@@ -5,7 +5,7 @@ namespace src\php;
 
 use Exception;
 
-final class DataProviderService
+final class DataProvider
 {
     public function getData(string $ambiguousString): array
     {
