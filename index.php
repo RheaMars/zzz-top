@@ -14,7 +14,7 @@ $checkedValueForSetNoLimitToShownOptions = isset($_POST['setShowOptionsLimit']) 
 <html lang="en">
 <head>
     <link href="src/css/font.css" rel="stylesheet">
-    <link rel="stylesheet" href="/src/css/styles.css">
+    <link rel="stylesheet" href="src/css/styles.css">
     <title>ZZZ Top</title>
 </head>
 <body>
