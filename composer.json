@@ -4,6 +4,9 @@
       "src/php/"
     ]
   },
+  "scripts": {
+    "test": "vendor/bin/phpunit"
+  },
   "require-dev": {
     "phpunit/phpunit": "^9.6"
   }
