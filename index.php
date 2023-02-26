@@ -20,6 +20,9 @@ $checkedValueForSetNoLimitToShownOptions = isset($_POST['setShowOptionsLimit']) 
 <body>
 
 <h1>ZZZ Top</h1>
+<p id="headlineSubtitle">
+    For more information take a look at <a href="https://github.com/RheaMars/zzz-top" target="_blank"><img id="githubImage" alt="Github Logo" src="src/img/github.png" title="github.com/RheaMars/zzz-top"/></a>
+</p>
 
 <form method="POST" action="index.php">
     <p>
