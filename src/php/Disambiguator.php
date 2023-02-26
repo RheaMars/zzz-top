@@ -7,10 +7,10 @@ final class Disambiguator
 {
     private const AMBIGUOUS_LETTER = "z";
 
-    public function disambiguate(string $originalInput): array
+    public function disambiguate(string $ambiguousString): array
     {
-        $articleNumber = $this->getArticleNumber($originalInput);
-        $paragraphsAsString = $this->getParagraphString($originalInput);
+        $articleNumber = $this->getArticleNumber($ambiguousString);
+        $paragraphsAsString = $this->getParagraphString($ambiguousString);
 
         $paragraphSegments = $this->getSegmentsFromParagraphString($paragraphsAsString);
         $ambiguousSegments = $this->getAmbiguousSegments($paragraphSegments);
@@ -58,25 +58,25 @@ final class Disambiguator
     }
 
     /**
-     * Extract the article number the input string starts with.
+     * Extract the article number the ambiguous string starts with.
      * E.g. for the input "1234zabcc" the article number would be 1234.
      */
-    private function getArticleNumber(string $originalInput): int
+    private function getArticleNumber(string $ambiguousString): int
     {
-        $filteredNumbers = array_filter(preg_split("/\D+/", $originalInput));
+        $filteredNumbers = array_filter(preg_split("/\D+/", $ambiguousString));
         $articleNumber = reset($filteredNumbers);
 
         return (int)$articleNumber;
     }
 
     /**
-     * Extract the string of paragraphs from the original input.
+     * Extract the string of paragraphs from the ambiguous string.
      * E.g. for the input "123zabcc" the string of paragraphs would be "zabcc".
      */
-    private function getParagraphString(string $originalInput): string
+    private function getParagraphString(string $ambiguousString): string
     {
-        $articleNumber = $this->getArticleNumber($originalInput);
-        return substr($originalInput, strlen((string)$articleNumber));
+        $articleNumber = $this->getArticleNumber($ambiguousString);
+        return substr($ambiguousString, strlen((string)$articleNumber));
     }
 
     /**

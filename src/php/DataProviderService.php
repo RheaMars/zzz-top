@@ -7,12 +7,12 @@ use Exception;
 
 final class DataProviderService
 {
-    public function getData(string $originalInput): array
+    public function getData(string $ambiguousString): array
     {
         $disambiguator = new Disambiguator();
         $converter = new Converter();
 
-        $lexicographicAlternatives = $disambiguator->disambiguate($originalInput); 
+        $lexicographicAlternatives = $disambiguator->disambiguate($ambiguousString);
 
         $output = [];
 
@@ -38,13 +38,13 @@ final class DataProviderService
     }
 
     /*
-     * Checks if the original input is a valid string.
+     * Checks if the given input is a valid string.
      * A valid string must start with a positive number and must be followed by and number of lowercase chars between a and z.
      * Valid examples: 12, 12a, 12xyzza
      * Invalid examples: -12, ax, 12-abc, 12abc3
      */
-    public function isInputValid(string $originalInput): bool
+    public function isInputValid(string $ambiguousString): bool
     {
-        return preg_match('/^[1-9]\d*[a-z]*$/', $originalInput) === 1;
+        return preg_match('/^[1-9]\d*[a-z]*$/', $ambiguousString) === 1;
     }
 }
