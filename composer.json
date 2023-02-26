@@ -1,8 +1,14 @@
 {
+  "name": "php/zzz-top",
+  "description": "Disambiguate and convert strings which represent a table of contents in an ambiguous way.",
+  "license": "MIT",
   "autoload": {
     "classmap": [
       "src/php/"
     ]
+  },
+  "scripts": {
+    "test": "vendor/bin/phpunit"
   },
   "require-dev": {
     "phpunit/phpunit": "^9.6"
