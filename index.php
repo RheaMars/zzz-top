@@ -16,6 +16,9 @@ $checkedValueForSetNoLimitToShownOptions = isset($_POST['setShowOptionsLimit']) 
     <link href="src/css/font.css" rel="stylesheet">
     <link rel="stylesheet" href="/src/css/styles.css">
     <title>ZZZ Top</title>
+    <meta name="robots" content="noindex,nofollow"/>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
 
@@ -35,7 +38,7 @@ $checkedValueForSetNoLimitToShownOptions = isset($_POST['setShowOptionsLimit']) 
         <input type="radio" id="setNoLimitToShownOptions" name="setShowOptionsLimit" value="false" <?php echo $checkedValueForSetNoLimitToShownOptions?>>
         <label for="setNoLimitToShownOptions">Show all options</label>
     </p>
-    <input type="submit" value="Submit">
+    <input type="submit" id="submit" value="Submit">
 </form>
 
 <?php
