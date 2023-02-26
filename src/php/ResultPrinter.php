@@ -20,7 +20,7 @@ final class ResultPrinter
             $numberOfResults = count($disambiguatedData);
 
             if (1 === $numberOfResults) {
-                $resultHeadline = '<h2>Value "' . $ambiguousString . '" is not ambiguous:</h2>';
+                $resultHeadline = '<h2>Value "' . $ambiguousString . '" is unambiguous:</h2>';
             }
             else {
                 $resultHeadline = '<h2>Value "' . $ambiguousString . '" disambiguates in ' . $numberOfResults . ' ways:</h2>';
