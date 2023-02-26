@@ -7,7 +7,7 @@
   - [Run the app locally](#run-the-app-locally)
   - [Tests](#tests)
 
-## Here's a thought experiment <a name="here-s-athought-experiment"></a>
+## Here's a thought experiment <a name="here-s-a-thought-experiment"></a>
 
 We're in the middle of World War I. To get his mind off things, Leonhardt Wittgenstein, a hardcore pythagorean arithmologist, sets out to solve all solvable problems in bureaucracy once and for all by employing a mere total of 121.023 propositions.
 
