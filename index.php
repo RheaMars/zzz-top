@@ -10,8 +10,8 @@
 <h1>ZZZ Top</h1>
 
 <form method="POST" action="index.php">
-    <label for="originalInput">Enter a value:</label><br/><br/>
-    <input type="text" id="originalInput" name="originalInput" value="<?php echo isset($_POST['originalInput']) ? $_POST['originalInput'] : '' ?>"><br/><br/>
+    <label for="ambiguousString">Enter a value:</label><br/><br/>
+    <input type="text" id="ambiguousString" name="ambiguousString" value="<?php echo isset($_POST['ambiguousString']) ? $_POST['ambiguousString'] : '' ?>"><br/><br/>
     <input type="submit" value="Submit">
 </form>
 
@@ -20,18 +20,18 @@ require 'vendor/autoload.php';
 
 use src\php\DataProviderService;
 
-if(isset($_POST['originalInput'])) {
+if(isset($_POST['ambiguousString'])) {
 
-    $originalInput = $_POST['originalInput'];
+    $ambiguousString = $_POST['ambiguousString'];
 
     $service = new DataProviderService();
 
-    if (!$service->isInputValid($originalInput)) {
+    if (!$service->isInputValid($ambiguousString)) {
         $htmlOutput = "<p class='warning'>Input is invalid: It must start with a positive number, followed by lower case characters, for example \"12abzaazx\".</p>";
     }
     else {
-        $disambiguatedData = $service->getData($originalInput);
-        $htmlOutput = '<h2>Value "' . $originalInput . '" disambiguates in ' . count($disambiguatedData) . ' ways:</h2>';
+        $disambiguatedData = $service->getData($ambiguousString);
+        $htmlOutput = '<h2>Value "' . $ambiguousString . '" disambiguates in ' . count($disambiguatedData) . ' ways:</h2>';
         $htmlOutput .= "
             <table>
             <tr>

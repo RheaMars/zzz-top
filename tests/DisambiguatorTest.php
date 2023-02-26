@@ -10,15 +10,15 @@ use src\php\Disambiguator;
 final class DisambiguatorTest extends TestCase
 {
     /**
-     * @dataProvider provideOriginalInputData
+     * @dataProvider provideAmbiguousStringData
      */
-    public function testDisambiguate(string $originalInput, array $lexicographicAlternatives): void
+    public function testDisambiguate(string $ambiguousString, array $lexicographicAlternatives): void
     {
         $disambiguator = new Disambiguator();
-        $this->assertSame($lexicographicAlternatives, $disambiguator->disambiguate($originalInput));
+        $this->assertSame($lexicographicAlternatives, $disambiguator->disambiguate($ambiguousString));
     }
 
-    public function provideOriginalInputData(): array
+    public function provideAmbiguousStringData(): array
     {
         return [
             [
