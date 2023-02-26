@@ -1,4 +1,4 @@
-# Twelve ZZZ Top
+# ZZZ Top
 
 - [Here's a thought experiment](#here-s-a-thought-experiment)
 - [What this app does](#what-this-app-does)
