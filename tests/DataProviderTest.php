@@ -14,7 +14,7 @@ final class DataProviderTest extends TestCase
      */
     public function testGetData(string $ambiguousString, array $expectedData): void
     {
-        $service = new DataProviderService();
+        $service = new DataProvider();
 
         $this->assertSame($expectedData, $service->getData($ambiguousString));
     }

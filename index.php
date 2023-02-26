@@ -28,7 +28,7 @@ $checkedValueForSetNoLimitToShownOptions = isset($_POST['setShowOptionsLimit']) 
     </p>
     <p>
         <input type="radio" id="setLimitToShownOptions" name="setShowOptionsLimit" value="true" <?php echo $checkedValueForSetLimitToShownOptions ?>>
-        <label for="setLimitToShownOptions">Show best options</label><br/>
+        <label for="setLimitToShownOptions">Show first two options</label><br/>
         <input type="radio" id="setNoLimitToShownOptions" name="setShowOptionsLimit" value="false" <?php echo $checkedValueForSetNoLimitToShownOptions?>>
         <label for="setNoLimitToShownOptions">Show all options</label>
     </p>
@@ -36,7 +36,7 @@ $checkedValueForSetNoLimitToShownOptions = isset($_POST['setShowOptionsLimit']) 
 </form>
 
 <?php
-if($formWasSubmitted) {
+if ($formWasSubmitted) {
     $resultPrinter = new ResultPrinter();
     echo $resultPrinter->printResult($ambiguousString, "true" === $setShowOptionsLimit);
 }
