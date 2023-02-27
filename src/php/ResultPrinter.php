@@ -12,7 +12,7 @@ final class ResultPrinter
         $dataProvider = new DataProvider();
 
         if (!$dataProvider->isInputValid($ambiguousString)) {
-            $htmlOutput = "<p class='warning'>Input is invalid: It must start with a positive number, followed by lower case characters, for example \"12abzaazx\".</p>";
+            $htmlOutput = "<p class='warning'>Input is invalid: It must start with a positive number, followed by lower case characters, for example \"12zzztop\".</p>";
         }
         else {
             $disambiguatedData = $dataProvider->getData($ambiguousString);
