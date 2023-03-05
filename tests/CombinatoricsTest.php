@@ -2,10 +2,10 @@
 declare(strict_types=1);
 
 use PHPUnit\Framework\TestCase;
-use src\php\Combinatorics;
+use src\php\CombinationsCalculator;
 
 /**
- * @covers \src\php\Combinatorics
+ * @covers \src\php\CombinationsCalculator
  */
 final class CombinatoricsTest extends TestCase
 {
@@ -14,8 +14,8 @@ final class CombinatoricsTest extends TestCase
      */
     public function testCombinations(array $set, ?int $subsetSize, $expectedCombinations): void
     {
-        $combinatorics = new Combinatorics();
-        $this->assertSame($expectedCombinations, $combinatorics->combinations($set, $subsetSize));
+        $combinationsCalculator = new CombinationsCalculator();
+        $this->assertSame($expectedCombinations, $combinationsCalculator->combinations($set, $subsetSize));
     }
 
     public function provideSetAndSubsetSizeData(): array
