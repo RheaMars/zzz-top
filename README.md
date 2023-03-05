@@ -3,9 +3,11 @@
 - [Here's a thought experiment](#here-s-a-thought-experiment)
 - [What this app does](#what-this-app-does)
 - [Minimal running setup](#minimal-running-setup)
-  - [Prerequisites](#prerequisites)
-  - [Run the app locally](#run-the-app-locally)
-  - [Tests](#tests)
+  - [Via docker](#via-docker)
+  - [Locally](#locally)
+    - [Prerequisites](#prerequisites)
+    - [Run the app locally](#run-the-app-locally)
+    - [Tests](#tests)
 
 ## Here's a thought experiment <a name="here-s-a-thought-experiment"></a>
 
@@ -47,18 +49,26 @@ The output of the string above would be
 
 ## Minimal running setup <a name="minimal-running-setup"></a>
 
-### Prerequisites <a name="prerequisites"></a>
+### Via docker <a name="via-docker"></a>
+- [docker](https://docs.docker.com/get-docker/)
+- Build the image by `docker build -t zzz-top .`
+- Run the image by `docker run test-zzz-container`
+- Open the browser at http://172.17.0.2/
+
+### Locally <a name="locally"></a>
+
+#### Prerequisites <a name="prerequisites"></a>
 - [php 8](https://www.php.net/manual/en/install.php)
 - [composer](https://getcomposer.org/download/)
 - php-xml: `sudo apt install php-xml`
 - phpunit: `sudo apt install phpunit`
 
-### Run the app locally <a name="run-the-app-locally"></a>
+#### Run the app locally <a name="run-the-app-locally"></a>
 
 - Run `composer install` to install project dependencies.
 - Run `php -S 127.0.0.1:8000` to start the local php server.
 - Open the browser at http://127.0.0.1:8000/index.php.
 
-### Tests <a name="tests"></a>
+#### Tests <a name="tests"></a>
 
 - Run the tests by `./vendor/bin/phpunit tests`.
