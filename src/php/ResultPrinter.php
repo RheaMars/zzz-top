@@ -12,18 +12,18 @@ final class ResultPrinter
         $dataProvider = new DataProvider();
 
         if (!$dataProvider->isInputValid($ambiguousString)) {
-            $htmlOutput = "<p class='warning'>Input is invalid: It must start with a positive number, followed by lower case characters, for example \"12zzztop\".</p>";
+            $htmlOutput = "<p class='warning'>Input is invalid: It must start with a positive number, followed by lower case latin characters, for example \"12zzztop\".</p>";
         }
         else {
-            $disambiguatedData = $dataProvider->getData($ambiguousString);
+            $disambiguatedData = $dataProvider->getData($ambiguousString, $setShowOptionsLimit);
 
-            $numberOfResults = count($disambiguatedData);
+            $numberOfAlternatives = $dataProvider->getNumberOfAlternatives($ambiguousString);
 
-            if (1 === $numberOfResults) {
+            if (1 === $numberOfAlternatives) {
                 $resultHeadline = '<h3>Value "' . $ambiguousString . '" is unambiguous:</h3>';
             }
             else {
-                $resultHeadline = '<h3>Value "' . $ambiguousString . '" disambiguates in ' . $numberOfResults . ' ways:</h3>';
+                $resultHeadline = '<h3>Value "' . $ambiguousString . '" disambiguates in ' . $numberOfAlternatives . ' ways:</h3>';
             }
 
             $htmlOutput = $resultHeadline;

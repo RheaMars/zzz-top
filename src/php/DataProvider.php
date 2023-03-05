@@ -7,12 +7,12 @@ use Exception;
 
 final class DataProvider
 {
-    public function getData(string $ambiguousString): array
+    public function getData(string $ambiguousString, bool $setShowOptionsLimit = true): array
     {
         $disambiguator = new Disambiguator();
         $converter = new Converter();
 
-        $lexicographicAlternatives = $disambiguator->disambiguate($ambiguousString);
+        $lexicographicAlternatives = $disambiguator->disambiguate($ambiguousString, $setShowOptionsLimit);
 
         $output = [];
 
@@ -28,9 +28,9 @@ final class DataProvider
             }
 
             $output[] = [
-                "lexicographic" => implode(".", $lexicographicAlternative),
-                "arabic" => implode(".", $arabicAlternative),
-                "greek" => implode(".", $greekAlternative)
+                'lexicographic' => implode('.', $lexicographicAlternative),
+                'arabic' => implode('.', $arabicAlternative),
+                'greek' => implode('.', $greekAlternative)
             ];
         }
 
@@ -46,5 +46,11 @@ final class DataProvider
     public function isInputValid(string $ambiguousString): bool
     {
         return preg_match('/^[1-9]\d*[a-z]*$/', $ambiguousString) === 1;
+    }
+
+    public function getNumberOfAlternatives(string $ambiguousString): int
+    {
+        $numberOfAmbiguousCharacters = substr_count(substr($ambiguousString, 0, strlen($ambiguousString) - 1), Disambiguator::AMBIGUOUS_LETTER);
+        return pow(2, $numberOfAmbiguousCharacters);
     }
 }

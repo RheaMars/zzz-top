@@ -9,7 +9,7 @@ final class Converter
 {
     public function getArabicConversion(array $lexicographicAlternative): array
     {
-        $range = range("a", "z");
+        $range = range('a', 'z');
 
         $arabicAlternative = [];
 
