@@ -50,9 +50,9 @@ The output of the string above would be
 ## Minimal running setup <a name="minimal-running-setup"></a>
 
 ### Via docker <a name="via-docker"></a>
-- [docker](https://docs.docker.com/get-docker/)
+- Install [docker](https://docs.docker.com/get-docker/)
 - Build the image by `docker build -t zzz-top .`
-- Run the image by `docker run test-zzz-container`
+- Run the image by `docker run test-zzz-top`
 - Open the browser at http://172.17.0.2/
 
 ### Locally <a name="locally"></a>
