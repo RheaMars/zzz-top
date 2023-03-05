@@ -12,7 +12,7 @@ final class CombinatoricsTest extends TestCase
     /**
      * @dataProvider provideSetAndSubsetSizeData
      */
-    public function testCombinations(array $set, ?int $subsetSize, $expectedCombinations): void
+    public function testCombinations(array $set, int $subsetSize, $expectedCombinations): void
     {
         $combinatorics = new Combinatorics();
         $this->assertSame($expectedCombinations, $combinatorics->combinations($set, $subsetSize));
@@ -53,15 +53,13 @@ final class CombinatoricsTest extends TestCase
                 ],
             ],
             [
-                ['a', 'b', 'c'],
-                null,
-                [
-                    [0 => 'a', 1 => 'b', 2 => 'c']
-                ],
+                ['a', 'b'],
+                0,
+                [],
             ],
             [
                 ['a', 'b'],
-                0,
+                -10,
                 [],
             ],
             [
