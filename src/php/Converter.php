@@ -52,14 +52,15 @@ final class Converter
             $greekAlternativeSegment = $this->mapIntegersByConversionArray($greekAlternativeSegmentNumbers, Mapper::GREEK_NO_STIGMA);
             
             $greekAlternative[] = $greekAlternativeSegment;
-                        
+            
         }
         return $greekAlternative;
     }
 
     /**
-     * Returns the decimal representation summands of an integer as an array of integers.
-     * E.g., for the $number 154, the function returns [100, 50, 4].
+     * Returns the decimal representation summands of an integer as an array of integers,
+     * in an alphabetic number system that can count up to the number 10^$maxExponent - 1.
+     * E.g., for the $number 154 and $maxExponent 6, the function returns [100, 50, 4].
      */
     private function getPowerOfTenSummands(int $number, int $maxExponent): array
     {
