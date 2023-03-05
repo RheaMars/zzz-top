@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace src\php;
 
-final class Mapping
+final class Mapper
 {
     public const GREEK_MAX_EXPONENT = 6;
 

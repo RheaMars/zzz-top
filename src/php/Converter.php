@@ -42,14 +42,14 @@ final class Converter
         $greekAlternative[] = $headSegment;
         foreach ($tailSegments as $tailSegment) {
 
-            $greekMaxNumber = pow(10, Mapping::GREEK_MAX_EXPONENT) - 1;
+            $greekMaxNumber = pow(10, Mapper::GREEK_MAX_EXPONENT) - 1;
             if ($tailSegment > $greekMaxNumber) {
                 throw new Exception("not supported (segment $tailSegment is higher than $greekMaxNumber).");
             }
 
-            $greekAlternativeSegmentNumbers = $this->getPowerOfTenSummands($tailSegment, Mapping::GREEK_MAX_EXPONENT);
+            $greekAlternativeSegmentNumbers = $this->getPowerOfTenSummands($tailSegment, Mapper::GREEK_MAX_EXPONENT);
 
-            $greekAlternativeSegment = $this->mapIntegersByConversionArray($greekAlternativeSegmentNumbers, Mapping::GREEK_NO_STIGMA);
+            $greekAlternativeSegment = $this->mapIntegersByConversionArray($greekAlternativeSegmentNumbers, Mapper::GREEK_NO_STIGMA);
             
             $greekAlternative[] = $greekAlternativeSegment;
                         
