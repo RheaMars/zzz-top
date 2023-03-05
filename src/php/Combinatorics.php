@@ -13,23 +13,19 @@ final class Combinatorics
     /**
      * Find all combinations given a set and a subset size.
      */
-    public function combinations(array $set, ?int $subsetSize = null): array
+    public function combinations(array $set, int $subsetSize): array
     {
         $setSize = count($set);
 
-        if (is_null($subsetSize)) {
-            $subsetSize = $setSize;
-        }
-
         if ($subsetSize >= $setSize) {
-            return array($set);
+            return [$set];
         } else if ($subsetSize == 1) {
             return array_chunk($set, 1);
-        } else if ($subsetSize == 0) {
-            return array();
+        } else if ($subsetSize <= 0) {
+            return [];
         }
 
-        $combinations = array();
+        $combinations = [];
         $setKeys = array_keys($set);
         $this->pointers = array_slice(array_keys($setKeys), 0, $subsetSize);
 
@@ -58,8 +54,7 @@ final class Combinatorics
             return true;
         } else {
             if ($this->advancePointers($pointerNumber - 1, $pointerLimit - 1)) {
-                $this->pointers[$pointerNumber] =
-                    $this->pointers[$pointerNumber - 1] + 1;
+                $this->pointers[$pointerNumber] = $this->pointers[$pointerNumber - 1] + 1;
                 return true;
             } else {
                 return false;
@@ -74,7 +69,7 @@ final class Combinatorics
     {
         $setKeys = array_keys($parentSet);
 
-        $combination = array();
+        $combination = [];
 
         foreach ($this->pointers as $pointer) {
             $combination[$setKeys[$pointer]] = $parentSet[$setKeys[$pointer]];
