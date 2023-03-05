@@ -34,9 +34,9 @@ $checkedValueForSetNoLimitToShownOptions = isset($_POST['setShowOptionsLimit']) 
     </p>
     <p>
         <input type="radio" id="setLimitToShownOptions" name="setShowOptionsLimit" value="true" <?php echo $checkedValueForSetLimitToShownOptions ?>>
-        <label for="setLimitToShownOptions">Show first two options</label><br/>
+        <label for="setLimitToShownOptions">Show first two alternatives</label><br/>
         <input type="radio" id="setNoLimitToShownOptions" name="setShowOptionsLimit" value="false" <?php echo $checkedValueForSetNoLimitToShownOptions?>>
-        <label for="setNoLimitToShownOptions">Show all options</label>
+        <label for="setNoLimitToShownOptions">Show all alternatives</label>
     </p>
     <input type="submit" id="submit" value="Submit">
 </form>
