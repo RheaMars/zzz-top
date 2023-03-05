@@ -5,16 +5,16 @@ namespace src\php;
 
 final class Disambiguator
 {
-    private const AMBIGUOUS_LETTER = "z";
+    public const AMBIGUOUS_LETTER = 'z';
 
-    public function disambiguate(string $ambiguousString): array
+    public function disambiguate(string $ambiguousString, bool $setShowOptionsLimit = true): array
     {
         $articleNumber = $this->getArticleNumber($ambiguousString);
         $paragraphsAsString = $this->getParagraphString($ambiguousString);
 
         $paragraphSegments = $this->getSegmentsFromParagraphString($paragraphsAsString);
         $ambiguousSegments = $this->getAmbiguousSegments($paragraphSegments);
-        $combinationsOfAmbiguousSegments = $this->getCombinationsOfAmbiguousSegments($ambiguousSegments);
+        $combinationsOfAmbiguousSegments = $this->getCombinationsOfAmbiguousSegments($ambiguousSegments, $setShowOptionsLimit);
         
         $paragraphSegmentAlternatives = $this->getParagraphSegmentAlternatives($paragraphSegments, $combinationsOfAmbiguousSegments);
 
@@ -23,21 +23,21 @@ final class Disambiguator
 
     /**
      * Extract the single paragraph segments from a paragraph string.
-     * E.g. for the paragraph string "abzczzzka" the segments would be ["a", "b", "zc", "zzzk", "a"].
-     * We bundle all paragraph segments containing a "z" to be able to find all possible combinations of
+     * E.g. for the paragraph string 'abzczzzka' the segments would be ['a', 'b', 'zc', 'zzzk', 'a'].
+     * We bundle all paragraph segments containing a 'z' to be able to find all possible combinations of
      * these ambiguous segments later.
      */
     private function getSegmentsFromParagraphString(string $paragraphsAsString): array
     {
-        preg_match_all("/[a-y]|z+[a-y]|z+/", $paragraphsAsString, $matches);
+        preg_match_all('/[a-y]|z+[a-y]|z+/', $paragraphsAsString, $matches);
         return $matches[0];
     }
 
     /**
      * Extract all ambiguous segments from an array.
-     * Note: a "z" in the end of the input array is never ambiguous.
-     * E.g. for the paragraph segments ["a", "b", "ze", "z"] we retrieve the following ambiguous segments:
-     * ["ze"].
+     * Note: a 'z' in the end of the input array is never ambiguous.
+     * E.g. for the paragraph segments ['a', 'b', 'zza', 'ze', 'z'] we retrieve the following ambiguous segments:
+     * [2 => ['z', 'z', 'a'], 3 => ['z', 'e']].
      */
     private function getAmbiguousSegments(array $paragraphSegments): array
     {
@@ -59,11 +59,11 @@ final class Disambiguator
 
     /**
      * Extract the article number the ambiguous string starts with.
-     * E.g. for the input "1234zabcc" the article number would be 1234.
+     * E.g. for the input '1234zabcc' the article number would be 1234.
      */
     private function getArticleNumber(string $ambiguousString): int
     {
-        $filteredNumbers = array_filter(preg_split("/\D+/", $ambiguousString));
+        $filteredNumbers = array_filter(preg_split('/\D+/', $ambiguousString));
         $articleNumber = reset($filteredNumbers);
 
         return (int)$articleNumber;
@@ -71,7 +71,7 @@ final class Disambiguator
 
     /**
      * Extract the string of paragraphs from the ambiguous string.
-     * E.g. for the input "123zabcc" the string of paragraphs would be "zabcc".
+     * E.g. for the input '123zabcc' the string of paragraphs would be 'zabcc'.
      */
     private function getParagraphString(string $ambiguousString): string
     {
@@ -82,11 +82,11 @@ final class Disambiguator
     /**
      * Identifies all indentation alternatives for all given ambiguous segments.
      * Note that the outmost keys of the result array are the keys we also have in the segments array.
-     * E.g., if the $ambiguousSegments is given as the associative array [2 => "za", 5 => "zzb"]
+     * E.g., if the $ambiguousSegments is given as the associative array [2 => 'za', 5 => 'zzb']
      * then the function returns the associative array
-     * [2 => [["za"], ["z", "a"]], 5 => [["zzb"], ["zz", "b"], ["z", "zb"], ["z", "z", "b"]]]
+     * [2 => [['za'], ['z', 'a']], 5 => [['zzb'], ['zz', 'b'], ['z', 'zb'], ['z', 'z', 'b']]]
      */
-    private function getCombinationsOfAmbiguousSegments(array $ambiguousSegments): array
+    private function getCombinationsOfAmbiguousSegments(array $ambiguousSegments, bool $setShowOptionsLimit): array
     {
         $combinationsOfAmbiguousSegments = [];
 
@@ -96,7 +96,7 @@ final class Disambiguator
 
             $alternativeSegments = [];
 
-            $splitPositionsForSegment = $this->getSplitPositionsForSegment($ambiguousSegment);
+            $splitPositionsForSegment = $this->getSplitPositionsForSegment($ambiguousSegment, $setShowOptionsLimit);
 
             foreach ($splitPositionsForSegment as $splitPositions) {
                 $alternativeSegment = $this->getAlternativeSegmentBySplitPositions($ambiguousSegmentString, $splitPositions);
@@ -111,8 +111,8 @@ final class Disambiguator
 
     /**
      * By a given segment string and its split positions create an array of its possible indentation alternatives.
-     * E.g. for segment "zzc" with split positions [0] we will retrieve ["z", "zc"],
-     * with split positions [0, 1] we wil retrieve ["z", "z", "c"].
+     * E.g. for segment 'zzc' with split positions [0] we will retrieve ['z', 'zc'],
+     * with split positions [0, 1] we wil retrieve ['z', 'z', 'c'].
      */
     private function getAlternativeSegmentBySplitPositions(string $ambiguousSegmentString, array $splitPositions): array
     {
@@ -121,18 +121,18 @@ final class Disambiguator
         $increasePositionCounter = strlen(self::AMBIGUOUS_LETTER);
 
         foreach ($splitPositions as $splitPosition) {
-            $resultString = substr_replace($resultString, ".", $splitPosition + $increasePositionCounter, 0);
+            $resultString = substr_replace($resultString, '.', $splitPosition + $increasePositionCounter, 0);
             $increasePositionCounter += $increasePositionCounter;
         }
 
-        return explode(".", trim($resultString, "."));
+        return explode('.', trim($resultString, '.'));
     }
 
     /**
      * Identifies all possible indentations (or splits) for the given segment as combinations of split positions.
-     * E.g. for segment "zzc" we have the split positions 0, 1 and (0 and 1) which will lead to "z.zc", "zz.c" and "z.z.c".
+     * E.g. for segment 'zzc' we have the split positions 0, 1 and (0 and 1) which will lead to 'z.zc', 'zz.c' and 'z.z.c'.
      */
-    private function getSplitPositionsForSegment(array $ambiguousSegment): array
+    private function getSplitPositionsForSegment(array $ambiguousSegment, bool $setShowOptionsLimit): array
     {
         $combinationsCalculator = new CombinationsCalculator();
 
@@ -140,13 +140,20 @@ final class Disambiguator
         $keyIndexRange = range(0, $ambiguousCharacterHeadLength - 1);
 
         $splitPositionsForSegment = [
-            [sizeof($ambiguousSegment) - 1] // the ambiguous segment itself is always a valid alternative, so we add it here
+            // the ambiguous segment itself is always a valid alternative, so we add it here
+            [sizeof($ambiguousSegment) - 1]
         ];
+
+        // if the user only wants to see the first two results then the only split position we need is the last to last
+        if ($setShowOptionsLimit) {
+            $splitPositionsForSegment[] = [sizeof($ambiguousSegment) - 2];
+            return $splitPositionsForSegment;
+        }
 
         for ($i = 0; $i <= sizeof($keyIndexRange); $i++) {
             $splitPositions = $combinationsCalculator->combinations($keyIndexRange, $i);
 
-            // reverse split positions to obtain on top the alternatives caused by the rightmost ambiguous "z"
+            // reverse split positions to obtain on top the alternatives caused by the rightmost ambiguous 'z'
             $reversedSplitPositions = array_reverse($splitPositions);
 
             foreach ($reversedSplitPositions as $splitPosition) {
@@ -159,10 +166,10 @@ final class Disambiguator
 
     /**
      * Gathers alternatives of unambiguous and ambiguous segments in a single array.
-     * For example, if $paragraphSegments is the array ["a", "za"] and
-     * $combinationsOfAmbiguousSegments the array [1 => [["za"], ["z", "a"]]]
+     * For example, if $paragraphSegments is the array ['a', 'za'] and
+     * $combinationsOfAmbiguousSegments the array [1 => [['za'], ['z', 'a']]]
      * then the function returns
-     * [[["a"]], [["za"], ["z", "a"]]]
+     * [[['a']], [['za'], ['z', 'a']]]
      * Note that the indices of the second input correspond to the implicit indices of the first.
      */
     private function getParagraphSegmentAlternatives(array $paragraphSegments, array $combinationsOfAmbiguousSegments): array
@@ -194,8 +201,8 @@ final class Disambiguator
 
     /**
      * Returns the cartesian product of two arrays.
-     * E.g. for $array1 with [["a"], ["b"]] and $array2 with [["zk"], ["z", "k"]]
-     * the function returns an array of [["a", "zk"], ["a", "z", "k"], ["b", "zk"], ["b", "z", "k"]]
+     * E.g. for $array1 with [['a'], ['b']] and $array2 with [['zk'], ['z', 'k']]
+     * the function returns an array of [['a', 'zk'], ['a', 'z', 'k'], ['b', 'zk'], ['b', 'z', 'k']]
      */
     private function getCartesianProduct(array $array1, array $array2): array
     {

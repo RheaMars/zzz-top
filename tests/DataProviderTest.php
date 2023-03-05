@@ -14,9 +14,9 @@ final class DataProviderTest extends TestCase
      */
     public function testGetData(string $ambiguousString, array $expectedData): void
     {
-        $service = new DataProvider();
+        $dataProvider = new DataProvider();
 
-        $this->assertSame($expectedData, $service->getData($ambiguousString));
+        $this->assertSame($expectedData, $dataProvider->getData($ambiguousString));
     }
 
     public function provideValidAmbiguousStringData(): array
@@ -26,9 +26,9 @@ final class DataProviderTest extends TestCase
                 '12az',
                 [
                     [
-                        "lexicographic" => '12.a.z',
-                        "arabic" => '12.1.26',
-                        "greek" => '12.α.κστ'
+                        'lexicographic' => '12.a.z',
+                        'arabic' => '12.1.26',
+                        'greek' => '12.α.κστ'
                     ]
                 ],
             ],
@@ -36,9 +36,9 @@ final class DataProviderTest extends TestCase
                 '12',
                 [
                     [
-                    "lexicographic" => '12',
-                    "arabic" => '12',
-                    "greek" => '12'
+                    'lexicographic' => '12',
+                    'arabic' => '12',
+                    'greek' => '12'
                     ]
                 ],
             ],
@@ -46,14 +46,14 @@ final class DataProviderTest extends TestCase
                 '333azb',
                 [
                     [
-                        "lexicographic" => '333.a.zb',
-                        "arabic" => '333.1.28',
-                        "greek" => '333.α.κη'
+                        'lexicographic' => '333.a.zb',
+                        'arabic' => '333.1.28',
+                        'greek' => '333.α.κη'
                     ],
                     [
-                        "lexicographic" => '333.a.z.b',
-                        "arabic" => '333.1.26.2',
-                        "greek" => '333.α.κστ.β'
+                        'lexicographic' => '333.a.z.b',
+                        'arabic' => '333.1.26.2',
+                        'greek' => '333.α.κστ.β'
                     ],
                 ],
             ],
@@ -119,5 +119,13 @@ final class DataProviderTest extends TestCase
                 true
             ],
         ];
+    }
+
+    public function testGetNumberOfAlternatives(): void
+    {
+        $dataProvider = new DataProvider();
+        $this->assertSame(1, $dataProvider->getNumberOfAlternatives('12az'));
+        $this->assertSame(8, $dataProvider->getNumberOfAlternatives('12azzzz'));
+        $this->assertSame(1024, $dataProvider->getNumberOfAlternatives('12azbzzdzzzezzfffzzgg'));
     }
 }
