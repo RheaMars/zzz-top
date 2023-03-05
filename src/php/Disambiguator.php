@@ -134,7 +134,7 @@ final class Disambiguator
      */
     private function getSplitPositionsForSegment(array $ambiguousSegment): array
     {
-        $combinatorics = new Combinatorics();
+        $combinationsCalculator = new CombinationsCalculator();
 
         $ambiguousCharacterHeadLength = count($ambiguousSegment) - 1; // last character is never ambiguous so we subtract 1
         $keyIndexRange = range(0, $ambiguousCharacterHeadLength - 1);
@@ -144,7 +144,7 @@ final class Disambiguator
         ];
 
         for ($i = 0; $i <= sizeof($keyIndexRange); $i++) {
-            $splitPositions = $combinatorics->combinations($keyIndexRange, $i);
+            $splitPositions = $combinationsCalculator->combinations($keyIndexRange, $i);
 
             // reverse split positions to obtain on top the alternatives caused by the rightmost ambiguous "z"
             $reversedSplitPositions = array_reverse($splitPositions);
