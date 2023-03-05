@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 use PHPUnit\Framework\TestCase;
 use src\php\Converter;
+use src\php\Mapper;
 
 /**
  * @covers \src\php\Converter
@@ -95,7 +96,7 @@ final class ConverterTest extends TestCase
                 [356, "οη"]
             ],
             [
-                [1, pow(10, Converter::GREEK_MAX_EXPONENT) - 1],
+                [1, pow(10, Mapper::GREEK_MAX_EXPONENT) - 1],
                 [1, "͵ϡ͵ϟ͵θϡϟθ"]
             ]
         ];
@@ -107,6 +108,6 @@ final class ConverterTest extends TestCase
 
         $this->expectException(Exception::class);
         $this->expectExceptionMessage('not supported (segment 1000000 is higher than 999999).');
-        $converter->getGreekConversion([1, pow(10, Converter::GREEK_MAX_EXPONENT)]);
+        $converter->getGreekConversion([1, pow(10, Mapper::GREEK_MAX_EXPONENT)]);
     }
 }
